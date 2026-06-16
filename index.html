@@ -1475,7 +1475,7 @@
         }
 
         // Google Sheets Integration
-        const HARDCODED_URL = "https://script.google.com/macros/s/AKfycbzj42d8C1QliygfDz6QnKn9aFR6XdjvmF6EAi0-2tVjFPL4u1jO4xv5l/exec";
+        const HARDCODED_URL = "https://script.google.com/macros/s/AKfycbwdIDCAqYK9DwiXtzUJuG3IPIerNwaohFO4l4oT_z5OyAi8R4MYuWBen-_u1KGyGwdq/exec";
 
         function getSheetURL() {
             return localStorage.getItem('al_sheet_url') || HARDCODED_URL;
@@ -1572,10 +1572,15 @@
         // On DOM Loaded, pre-fill saved Google Script URL
         document.addEventListener('DOMContentLoaded', () => {
             const savedURL = localStorage.getItem('al_sheet_url');
+            if (savedURL === "https://script.google.com/macros/s/AKfycbzj42d8C1QliygfDz6QnKn9aFR6XdjvmF6EAi0-2tVjFPL4u1jO4xv5l/exec" || 
+                savedURL === "https://script.google.com/macros/s/AKfycbzj42d8C1QIiygfDz6QnKn9aFR6XdjvmF6EAi0-2tVjFPL4u1jO4xv5BDDzxJVnTdnf/exec") {
+                localStorage.removeItem('al_sheet_url');
+            }
             const inputEl = document.getElementById('admin-sheet-url-input');
             if (inputEl) {
-                if (savedURL) {
-                    inputEl.value = savedURL;
+                const currentSavedURL = localStorage.getItem('al_sheet_url');
+                if (currentSavedURL) {
+                    inputEl.value = currentSavedURL;
                 } else {
                     inputEl.value = HARDCODED_URL;
                 }
